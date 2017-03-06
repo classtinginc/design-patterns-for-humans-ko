@@ -2,41 +2,36 @@
 
 ***
 <p align="center">
-🎉 디자인 패턴 초간단 설명! 🎉
+🎉 Ultra-simplified explanation to design patterns! 🎉
 </p>
 <p align="center">
-생각을 쉽게 흔들 수 있는 주제. 가능한 <i>가장 단순한</i> 설명으로 당신의(그리고 아마도 나의) 뇌리에 깊숙히 박히도록 노력할 것입니다.
+A topic that can easily make anyone's mind wobble. Here I try to make them stick in to your mind (and maybe mine) by explaining them in the <i>simplest</i> way possible. 
 </p>
 ***
 
-읽기에 앞서
+🚀 Introduction
 =================
 
-오역이 있을 수 있으며, 번역이 힘든 부분은 의역을 했습니다 만약 오타나 오역으로 인해 수정이 필요한 부분이나 이해가 어려운 내용이 있다면 [Issue](https://github.com/classtinginc/design-patterns-for-humans-ko/issues)에 글 남겨주세요
+Design patterns are solutions to recurring problems; **guidelines on how to tackle certain problems**. They are not classes, packages or libraries that you can plug into your application and wait for the magic to happen. These are, rather, guidelines on how to tackle certain problems in certain situations. 
 
-🚀 소개(Introduction)
-=================
+> Design patterns solutions to recurring problems; guidelines on how to tackle certain problems
 
-디자인 패턴은 되풀이되는 문제에 대한 해결책 입니다. **특정 문제를 해결하는 방법에 대한 지침**. 클래스나 패키지 또는 라이브러리 같이 응용프로그램에 연결하여 저절로 해결되는 것을 말하는 것이 아닙니다. 이는 특정 상황에서 발생하는 특정 문제를 해결하는 방법에 대한 지침입니다  
+Wikipedia describes them as
 
-> 되풀이 되는 문제에 대한 디자인 패턴 해결책; 특정 문제를 해결하는 방법에 대한 지침
+> In software engineering, a software design pattern is a general reusable solution to a commonly occurring problem within a given context in software design. It is not a finished design that can be transformed directly into source or machine code. It is a description or template for how to solve a problem that can be used in many different situations.
 
-위키피디아는 다음과 같이 기술합니다
-
-> 소프트웨어 공학에서 소프트웨어 디자인 패턴은 주어진 상황에서 공통적으로 발생하는 문제에 대한 일반적으로 재사용 가능한 해결법을 의미합니다. 소프트웨어 디자인 패턴은 소스나 기계어로 곧바로 변환 될 수 있는 완성된 디자인은 아닙니다. 그것은 문제를 해결 하기 위해 여러 상황에서 사용될 수 있는 설명 또는 템플릿입니다 
-
-⚠️ 주의(Be Careful)
+⚠️ Be Careful
 -----------------
-- 디자인 패턴은 모든 문제에 대한 특효약이 아닙니다 
-- 강요하지 마세요. 안좋은 일이 발생할 수 있습니다. 디자인 패턴은 문제를 **해결**하기 위한 솔루션이지 문제를 **찾기** 위한 해결책이 아님을 염두에 두세요. 그러므로 너무 오래 생각하지 마세요
-- 올바른 방법으로 제대로 사용한다면, 구원자가 될 수 있을 겁니다. 그렇지 않으면 코드를 엉망으로 만드는 결과를 초래 할 수 있습니다
+- Design patterns are not a silver bullet to all your problems.
+- Do not try to force them; bad things are supposed to happen, if done so. Keep in mind that design patterns are solutions **to** problems, not solutions **finding** problems; so don't overthink.
+- If used in a correct place in a correct manner, they can prove to be a savior; or else they can result in a horrible mess of a code.
 
-디자인 패턴의 유형(Types of Design Patterns)
+Types of Design Patterns
 -----------------
 
-* [생성(Creational)](#creational-design-patterns)
-* [구조(Structural)](#structural-design-patterns)
-* [행동(Behavioral)](#behavioral-design-patterns)
+* [Creational](#creational-design-patterns)
+* [Structural](#structural-design-patterns)
+* [Behavioral](#behavioral-design-patterns)
 
 
 Creational Design Patterns
