@@ -39,36 +39,37 @@
 * [행동(Behavioral)](#behavioral-design-patterns)
 
 
-Creational Design Patterns
-==========================
+생성 디자인 패턴(Creational Design Patterns)
+========================================
 
-In plain words
-> Creational patterns are focused towards how to instantiate an object or group of related objects.
+쉽게 말해
+> 생성 패턴은 객체 또는 관련 객체의 그룹을 어떻게 인스턴스화하는지에 초점을 맞춥니다.
 
-Wikipedia says
-> In software engineering, creational design patterns are design patterns that deal with object creation mechanisms, trying to create objects in a manner suitable to the situation. The basic form of object creation could result in design problems or added complexity to the design. Creational design patterns solve this problem by somehow controlling this object creation.
+위키피디아에서는
+> 소프트웨어 공학에서 생성 디자인 패턴은 객체 생성 메커니즘을 다루는 디자인 패턴으로, 상황에 적합한 방식으로 객체를 생성하려 합니다. 객체 생성의 기본 형태는 설계 문제 또는 설계의 복잡성을 증가시킬 수 있습니다. 생성 디자인 패턴은 어떻게든 객체 생성을 제어함으로써 이러한 문제를 해결합니다.
  
- * [Simple Factory](#-simple-factory)
- * [Factory Method](#-factory-method)
- * [Abstract Factory](#-abstract-factory)
- * [Builder](#-builder)
- * [Prototype](#-prototype)
- * [Singleton](#-singleton)
+ * [단순 팩토리(Simple Factory)](#-simple-factory)
+ * [팩토리 메소드(Factory Method)](#-factory-method)
+ * [추상 팩토리(Abstract Factory)](#-abstract-factory)
+ * [빌더(Builder)](#-builder)
+ * [프로토타입(Prototype)](#-prototype)
+ * [싱글톤(Singleton)](#-singleton)
  
-🏠 Simple Factory
+🏠 단순 팩토리(Simple Factory)
 --------------
-Real world example
-> Consider, you are building a house and you need doors. It would be a mess if every time you need a door, you put on your carpenter clothes and start making a door in your house. Instead you get it made from a factory.
+실세계 예제
+> 자, 당신이 집을 짓는 중에 문이 필요하다고 생각해 봅시다. 당신이 문이 필요할 때마다 목수 옷을 입고 문을 손수 만들어야 한다면, 집안은 엉망진창일 것입니다. 대신, 공장에서 만들어진 문을 가져올 수 있습니다.
 
-In plain words
-> Simple factory simply generates an instance for client without exposing any instantiation logic to the client
+쉽게 말해
+> 단순 팩토리는 클라이언트에게 인스턴스 생성 로직을 노출시키지 않고 단순히 클라이언트 인스턴스를 생성합니다
 
-Wikipedia says
-> In object-oriented programming (OOP), a factory is an object for creating other objects – formally a factory is a function or method that returns objects of a varying prototype or class from some method call, which is assumed to be "new".
+위키피디아에서는
+> 객체 지향 프로그래밍(OOP)에서 팩토리는 다른 객체를 생성하기 위한 또다른 객체입니다. 공식적으로 팩토리는 "new"로 가정되는 메서드 호출을 통해 다양한 프로토타입 또는 클래스의 객체를 반환하는 함수 또는 메서드입니다. 
 
-**Programmatic Example**
+**프로그램 예제**
 
-First of all we have a door interface and the implementation
+우선, Door 인터페이스와 Door의 구현체가 있다고 생각해 봅시다.
+
 ```php
 interface Door {
     public function getWidth() : float;
@@ -92,8 +93,10 @@ class WoodenDoor implements Door {
         return $this->height;
     }
 }
-````
-Then we have our door factory that makes the door and returns it
+```
+
+그리고 나서, Door을 생성 후 리턴하는 DoorFactory를 추가합니다.
+
 ```php
 class DoorFactory {
    public static function makeDoor($width, $height) : Door {
@@ -101,33 +104,36 @@ class DoorFactory {
    }
 }
 ```
-And then it can be used as
+
+이제 다음과 같이 사용될 수 있습니다.
+
 ```php
 $door = DoorFactory::makeDoor(100, 200);
 echo 'Width: ' . $door->getWidth();
 echo 'Height: ' . $door->getHeight();
 ```
 
-**When to Use?**
+**언제 사용해야 할까요?**
 
-When creating an object is not just a few assignments and involves some logic, it makes sense to put it in a dedicated factory instead of repeating the same code everywhere. 
+객체를 생성할 때 단지 몇개의 할당 뿐 아니라 일부 로직 또한 수반되기에, 모든 곳에서 동일한 코드를 반복하는 대신에 전용 팩토리에 그러한 것들을 넣는것이 더 좋습니다.
 
-🏭 Factory Method
---------------
 
-Real world example
-> Consider the case of a hiring manager. It is impossible for one person to interview for each of the positions. Based on the job opening, she has to decide and delegate the interview steps to different people. 
+🏭 팩토리 메서드(Factory Method)
+----------------------------
 
-In plain words
-> It provides a way to delegate the instantiation logic to child classes. 
+실세계 예시
+> 고용 관리자의 경우를 생각해봅시다. 한 사람이 각 포지션을 모두 인터뷰하는 것은 불가능할 것입니다. 채용 공고를 바탕으로, 인터뷰 단계를 결정하고 각 단계별로 다른 사람에게 위임해야 합니다 
 
-Wikipedia says
-> In class-based programming, the factory method pattern is a creational pattern that uses factory methods to deal with the problem of creating objects without having to specify the exact class of the object that will be created. This is done by creating objects by calling a factory method—either specified in an interface and implemented by child classes, or implemented in a base class and optionally overridden by derived classes—rather than by calling a constructor.
+쉽게 말해
+> 생성 로직을 하위 클래스에 위임하는 방법을 제공합니다.
+
+위키피디아에서는
+> 클래스 기반 프로그래밍에서는, 팩토리 메서드 패턴은 생성될 객체의 정확한 클래스를 지정하지 않고 객체 생성을 처리하는 팩토리 메서드를 사용하는 생성 패턴입니다. 이는 생성자를 호출하는 대신에 팩토리 메서드(인터페이스에 명세되어 하위 클래스에서 구현되거나 기본 클래스에 구현되며, 선택적으로 파생 클래스에서 대체되기도 하는)호출로 객체를 생성하여 수행됩니다.
  
- **Programmatic Example**
- 
-Taking our hiring manager example above. First of all we have an interviewer interface and some implementations for it
+ **프로그램 예제**
 
+위의 채용 관리자 예제를 다시 봅시다. 우선, 우리에게는 Interviewer 인터페이스와 그에 대한 몇 개의 구현체가 있습니다. 
+ 
 ```php
 interface Interviewer {
     public function askQuestions();
@@ -146,7 +152,7 @@ class CommunityExecutive implements Interviewer {
 }
 ```
 
-Now let us create our `HiringManager`
+이제 `HiringManager`를 만들어 봅시다
 
 ```php
 abstract class HiringManager {
@@ -160,7 +166,9 @@ abstract class HiringManager {
     }
 }
 ```
-Now any child can extend it and provide the required interviewer
+
+이제 `HiringManager`를 상속받아 필요한 면접관을 제공 할 수 있습니다
+
 ```php
 class DevelopmentManager extends HiringManager {
     public function makeInterviewer() : Interviewer {
@@ -174,7 +182,8 @@ class MarketingManager extends HiringManager {
     }
 }
 ```
-and then it can be used as
+
+그리고 이제 다음과 같이 사용될 수 있습니다
 
 ```php
 $devManager = new DevelopmentManager();
@@ -184,25 +193,25 @@ $marketingManager = new MarketingManager();
 $marketingManager->takeInterview(); // Output: Asking about community building.
 ```
 
-**When to use?**
+**언제 사용해야 할까요?**
 
-Useful when there is some generic processing in a class but the required sub-class is dynamically decided at runtime. Or putting it in other words, when the client doesn't know what exact sub-class it might need.
+클래스에 generic processing을 할 때 필요한 하위 클래스가 실행 중에 동적으로 결정되는 경우에 유용합니다. 다른말로 표현하면, 클라이언트가 필요한 하위 클래스를 정확히 알 수 없는 경우입니다.
 
-🔨 Abstract Factory
+🔨 추상 팩토리(Abstract Factory)
 ----------------
 
-Real world example
-> Extending our door example from Simple Factory. Based on your needs you might get a wooden door from a wooden door shop, iron door from an iron shop or a PVC door from the relevant shop. Plus you might need a guy with different kind of specialities to fit the door, for example a carpenter for wooden door, welder for iron door etc. As you can see there is a dependency between the doors now, wooden door needs carpenter, iron door needs a welder etc.
+실세계 예시
+> 단순 팩토리의 문 예제를 확장해봅시다. 당신은 필요하다면 나무문, 철문, PVC 문을 각각 나무문 가게, 철문 가게, PVC 가게로부터 구할 수 있습니다. 게다가 나무문을 위해선 목수, 철문을 위해서는 용접공 등 문을 설치할 서로 다른 종류의 전문기사들이 필요 할지 모릅니다. 이제 나무문은 목수, 철문은 용접공 등 문 사이에 어떤 의존성이 있음을 알 수 있습니다. 
 
-In plain words
-> A factory of factories; a factory that groups the individual but related/dependent factories together without specifying their concrete classes. 
+쉽게 말해
+> 팩토리들의 팩토리입니다. 개개인이 아니라 관련/종속 팩토리들을 그들의 구체적인 클래스를 지정하지 않고 함께 그룹화 하는 팩토리입니다. 
   
-Wikipedia says
-> The abstract factory pattern provides a way to encapsulate a group of individual factories that have a common theme without specifying their concrete classes
+위키피디아에서는
+> 추상 팩토리 패턴은 구체적인 클래스를 명세 없이 공통 주제를 가진 개개의 팩토리들의 그룹을 캡슐화하는 방법을 제공합니다.
 
-**Programmatic Example**
+**프로그램 예제**
 
-Translating the door example above. First of all we have our `Door` interface and some implementation for it
+위의 문 예제를 프로그램화 해봅시다. 우선 우리에게는 `Door` 인터페이스와 그것의 구현체가 몇개 있습니다.
 
 ```php
 interface Door {
@@ -221,7 +230,7 @@ class IronDoor implements Door {
     }
 }
 ```
-Then we have some fitting experts for each door type
+그런 다음 각 문 유형에 맞는 설치 전문가가 있습니다
 
 ```php
 interface DoorFittingExpert {
@@ -241,7 +250,8 @@ class Carpenter implements DoorFittingExpert {
 }
 ```
 
-Now we have our abstract factory that would let us make family of related objects i.e. wooden door factory would create a wooden door and wooden door fitting expert and iron door factory would create an iron door and iron door fitting expert
+이제 관련된 객체의 패밀리를 만들 수 있는 추상 팩토리가 있습니다. 즉, 나무문 팩토리는 나무문과 나무문 설치 전문가를 생성할 수 있고, 철문 팩토리는 철문과 철문 설치 전문가를 생성할 수 있습니다.
+
 ```php
 interface DoorFactory {
     public function makeDoor() : Door;
@@ -270,7 +280,8 @@ class IronDoorFactory implements DoorFactory {
     }
 }
 ```
-And then it can be used as
+그리고 나서 다음과 같이 활용될 수 있습니다
+
 ```php
 $woodenFactory = new WoodenDoorFactory();
 
@@ -290,35 +301,35 @@ $door->getDescription();  // Output: I am an iron door
 $expert->getDescription(); // Output: I can only fit iron doors
 ```
 
-As you can see the wooden door factory has encapsulated the `carpenter` and the `wooden door` also iron door factory has encapsulated the `iron door` and `welder`. And thus it had helped us make sure that for each of the created door, we do not get a wrong fitting expert.   
+이제 나무문 팩토리는 `목수`와 `나무문`을, 철문 팩토리는 `철문`과 `용접공`을 캡슐화함을 볼 수 있습니다. 그래서 우리는 각 생성된 문에 적합한 설치 전문가를 얻게 됩니다.
 
-**When to use?**
+**언제 사용해야 할까요?**
 
-When there are interrelated dependencies with not-that-simple creation logic involved
+단순하지 않은 생성 로직이 포함된 상호 의존성이 있을 때 사용합니다.
 
-👷 Builder
+👷 빌더(Builder)
 --------------------------------------------
-Real world example
-> Imagine you are at Hardee's and you order a specific deal, lets say, "Big Hardee" and they hand it over to you without *any questions*; this is the example of simple factory. But there are cases when the creation logic might involve more steps. For example you want a customized Subway deal, you have several options in how your burger is made e.g what bread do you want? what types of sauces would you like? What cheese would you want? etc. In such cases builder pattern comes to the rescue.
+실세계 예시
+> 당신이 Hardee's에서 "Big Hardee"와 같은 특정 딜을 주문하였고, 그들은 *어떤 질문*없이 그것을 당신에게 넘겨줬다고 가정해보자. 이것은 단순 팩토리의 예제입니다. 하지만 생성 로직이 더 많은 단계들을 포함해야 하는 경우들도 있습니다. 예를 들어, 당신의 요구에 맞춰진 Subway 딜을 원할 경우, 당신은 어떤 빵을 원하는지, 어떤 종류의 소스를 좋아하는지, 어떤 치즈를 넣을지 등과 같은 당신만의 버거를 어떤식으로 만들지에 대한 몇개의 선택권이 있습니다. 이러한 경우에 빌더 패턴이 해결책이 될 수 있습니다.
 
-In plain words
-> Allows you to create different flavors of an object while avoiding constructor pollution. Useful when there could be several flavors of an object. Or when there are a lot of steps involved in creation of an object.
- 
-Wikipedia says
-> The builder pattern is an object creation software design pattern with the intentions of finding a solution to the telescoping constructor anti-pattern.
+쉽게 말해
+> 생성자 오염을 피하면서 다양한 형태의 객체를 생성할 수 있도록 합니다. 여러 가지 종류의 객체가 필요할 때 유용합니다. 또는 객체 생성에 여러 단계가 포함되어 있을 때 사용됩니다.
 
-Having said that let me add a bit about what telescoping constructor anti-pattern is. At one point or the other we have all seen a constructor like below:
+위키피디아에서는
+> 빌더 패턴은 telescoping constructor anti-pattern 에 대한 해결책을 제공하는 객체 생성 소프트웨어 디자인 패턴입니다.
+
+telescoping constructor anti-pattern이 무엇인지 조금 더 봅시다. 한 지점 또는 다른 지점에서 우리 모두는 아래와 같은 생성자를 본적이 있습니다.
  
 ```php
 public function __construct($size, $cheese = true, $pepperoni = true, $tomato = false, $lettuce = true) {
 }
 ```
 
-As you can see; the number of constructor parameters can quickly get out of hand and it might become difficult to understand the arrangement of parameters. Plus this parameter list could keep on growing if you would want to add more options in future. This is called telescoping constructor anti-pattern.
+보시다시피 생성자의 매개변수의 수는 쉽게 많아 질 수 있고, 이로 인해 매개변수들의 배열을 이해하기 어렵게 합니다. 더우기 당신이 미래에 더 많은 옵션을 추가하고자 한다면, 이 매개변수 리스트는 계속해서 증가 할 것입니다. 이러한 현상을 telescoping constructor anti-pattern 이라 합니다.
 
-**Programmatic Example**
+**프로그램 예제**
 
-The sane alternative is to use the builder pattern. First of all we have our burger that we want to make
+정상적인 대안은 빌더 패턴을 사용하는 것입니다. 우선 우리가 만들고 싶은 햄버거가 있습니다.
 
 ```php
 class Burger {
@@ -339,7 +350,7 @@ class Burger {
 }
 ```
 
-And then we have the builder
+이제 다음과 같이 빌더가 있습니다.
 
 ```php
 class BurgerBuilder {
@@ -379,7 +390,7 @@ class BurgerBuilder {
     }
 }
 ```
-And then it can be used as:
+그런 후 다음과 같이 사용될 수 있습니다.
 
 ```php
 $burger = (new BurgerBuilder(14))
@@ -389,26 +400,26 @@ $burger = (new BurgerBuilder(14))
                     ->build();
 ```
 
-**When to use?**
+**언제 사용할까요?**
 
-When there could be several flavors of an object and to avoid the constructor telescoping. The key difference from the factory pattern is that; factory pattern is to be used when the creation is a one step process while builder pattern is to be used when the creation is a multi step process.
+몇가지 형태의 객체가 있을 수 있을 때와 생성자 텔레스코핑을 피하고자 할 때 사용합니다. 팩토리 패턴과 다른점은 팩토리 패턴은 생성이 한 단계일 때 사용되는 반면에 빌더 패턴은 생성이 다중 단계 프로세스일 때 사용됩니다.
 
-🐑 Prototype
+🐑 프로토타입(Prototype)
 ------------
-Real world example
-> Remember dolly? The sheep that was cloned! Lets not get into the details but the key point here is that it is all about cloning
+실세계 예시
+> 돌리를 기억하세요? 복제된 양! 자세한건 모르더라도, 여기서 요점은 복제에 관한 것이라는 겁니다.
 
-In plain words
-> Create object based on an existing object through cloning.
+쉽게 말해
+> 복제를 통해 기존 객체를 기반으로 객체를 생성하는 것입니다.
 
-Wikipedia says
-> The prototype pattern is a creational design pattern in software development. It is used when the type of objects to create is determined by a prototypical instance, which is cloned to produce new objects.
+위키피디아에서는
+> 프로토타입 패턴은 소프트웨어 개발의 생성 디자인 패턴입니다. 생성할 객체의 유형이 새 객체를 만들기 위해 복제될 프로토타입 인스턴스에 의해 결정될 때 사용됩니다.
 
-In short, it allows you to create a copy of an existing object and modify it to your needs, instead of going through the trouble of creating an object from scratch and setting it up.
+요컨대, 프로토타입 패턴은 객체를 처음부터 생성하고 설정하는 골치아픈 문제를 겪는 대신에 기존 객체의 사본을 생성하게 하고 당신의 필요에 맞게 변경하게 합니다.
 
-**Programmatic Example**
+**프로그램 예제**
 
-In PHP, it can be easily done using `clone`
+PHP에서는 `clone`을 써서 쉽게 할 수 있습니다
   
 ```php
 class Sheep {
@@ -437,7 +448,9 @@ class Sheep {
     }
 }
 ```
-Then it can be cloned like below
+
+아래와 같이 복제될 수 있습니다
+
 ```php
 $original = new Sheep('Jolly');
 echo $original->getName(); // Jolly
@@ -450,28 +463,29 @@ echo $cloned->getName(); // Dolly
 echo $cloned->getCategory(); // Mountain sheep
 ```
 
-Also you could use the magic method `__clone` to modify the cloning behavior.
+또한 매직 메소드인 `__clone`을 사용하여 복제동작을 수정할 수 있습니다. 
 
-**When to use?**
+**언제 사용할까요?**
 
-When an object is required that is similar to existing object or when the creation would be expensive as compared to cloning.
+기존 객체와 유사한 객체가 필요하거나 복제 작업에 비해 생성의 비용이 더 높을 때 사용합니다.
 
-💍 Singleton
+💍 싱글톤(Singleton)
 ------------
-Real world example
-> There can only be one president of a country at a time. The same president has to be brought to action, whenever duty calls. President here is singleton.
+실세계 예시
+> 한 국가에는 한명의 대통령만 있을 수 있습니다. 임무가 있을 때마다 동일한 대통령이 행동에 나섭니다. 여기서 대통령은 싱글톤입니다.
 
-In plain words
-> Ensures that only one object of a particular class is ever created.
+쉽게 말해
+> 특정 클래스의 객체가 하나만 생성되도록 합니다
 
-Wikipedia says
-> In software engineering, the singleton pattern is a software design pattern that restricts the instantiation of a class to one object. This is useful when exactly one object is needed to coordinate actions across the system.
+위키피디아 에서는
+> 소프트웨어 공학에서 싱글톤 패턴이란, 클래스의 인스턴스화를 하나의 객체로 제한하는 소프트웨어 디자인 패턴입니다. 이는 시스템을 통틀어 작업을 조정하는데 정확히 하나의 객체만 필요할 때 유용합니다
 
-Singleton pattern is actually considered an anti-pattern and overuse of it should be avoided. It is not necessarily bad and could have some valid use-cases but should be used with caution because it introduces a global state in your application and change to it in one place could affect in the other areas and it could become pretty difficult to debug. The other bad thing about them is it makes your code tightly coupled plus it mocking the singleton could be difficult.
+싱글톤 패턴은 사실 anti-pattern으로 간주되며 과도한 사용은 피해야 합니다. 꼭 나쁜것은 아니며 유효한 use-case가 있을 수 있지만 당신의 어플리케이션 전역 상태를 드러내고 한곳에서 그것을 변경하면 다른 곳에 영향을 미칠 수 있으며, 디버깅하기 어렵게 하는 요인이 되기에 조심해서 사용되어야 합니다. 또 다른 안좋은 점은 코드를 단단히 결합시키는 데다가 싱글톤의 가짜(mock)를 만드는 것은 어렵습니다.
 
-**Programmatic Example**
+**프로그램 예제**
 
-To create a singleton, make the constructor private, disable cloning, disable extension and create a static variable to house the instance
+싱글톤을 생성하기 위해서는 생성자를 private으로 만들고, 복제를 비활성화 하고, 확장을 비활성화하고 인스턴스를 저장할 정적 변수를 생성합니다. 
+
 ```php
 final class President {
     private static $instance;
@@ -493,7 +507,9 @@ final class President {
     }
 }
 ```
-Then in order to use
+
+이제 다음과 같이 사용하면 됩니다.
+
 ```php
 $president1 = President::getInstance();
 $president2 = President::getInstance();
